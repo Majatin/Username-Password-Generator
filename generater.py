@@ -1,5 +1,7 @@
 import json
 import datetime
+import random
+import string
 
 def generate_username(first_name, last_name, birthday):
      # Combine first name, last name, and birthday
@@ -8,6 +10,16 @@ def generate_username(first_name, last_name, birthday):
 
 def is_username_unique(username, existing_usernames):
      return username not in existing_usernames
+
+def generate_password():
+    # Create a list of characters to choose from.
+    characters = string.ascii_letters + string.digits + string.punctuation
+    passwords = []
+    for i in range(15):
+        password = ''.join(random.choice(characters) for i in range(15))
+        passwords.append(password)
+    # Return a random password from the list.
+    return random.choice(passwords)
 
 def main():
      # Load existing usernames from JSON file (if available)
@@ -39,6 +51,7 @@ def main():
                  "last_name": last_name,
                  "birthday": birthday_str,
                  "username": unique_username,
+                 "password": generate_password(),
              }
 
              # Confirmation step
@@ -47,6 +60,7 @@ def main():
              print(f"  Last Name: {usernames_dict['last_name']}")
              print(f"  Birthday: {usernames_dict['birthday']}")
              print(f"  Username: {usernames_dict['username']}")
+             print(f". Password: {usernames_dict['password']}")
 
              confirmation = input("Is this information correct? (yes/no): ").lower().strip()
              if confirmation == 'yes':
